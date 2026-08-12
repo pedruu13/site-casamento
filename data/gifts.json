@@ -1,0 +1,247 @@
+[
+  {
+    "id": "panela-de-arroz",
+    "title": "Panela de arroz",
+    "description": "Para o arroz soltinho dos nossos almocos em casa.",
+    "unitPrice": 149,
+    "currencyId": "BRL",
+    "category": "Cozinha",
+    "active": true
+  },
+  {
+    "id": "liquidificador",
+    "title": "Liquidificador",
+    "description": "Para sucos, vitaminas e receitas do nosso novo lar.",
+    "unitPrice": 89,
+    "currencyId": "BRL",
+    "category": "Cozinha",
+    "active": true
+  },
+  {
+    "id": "forno-eletrico",
+    "title": "Forno elétrico",
+    "description": "Para assados, bolos e muitas receitas especiais.",
+    "unitPrice": 360,
+    "currencyId": "BRL",
+    "category": "Eletrodomésticos",
+    "active": true
+  },
+  {
+    "id": "microondas",
+    "title": "Microondas",
+    "description": "Praticidade no dia a dia da nossa cozinha.",
+    "unitPrice": 499,
+    "currencyId": "BRL",
+    "category": "Eletrodomésticos",
+    "active": true
+  },
+  {
+    "id": "multiprocessador",
+    "title": "Multiprocessador",
+    "description": "Para facilitar o preparo das nossas receitas.",
+    "unitPrice": 179,
+    "currencyId": "BRL",
+    "category": "Cozinha",
+    "active": true
+  },
+  {
+    "id": "panela-de-pressao-eletrica",
+    "title": "Panela de pressão elétrica",
+    "description": "Mais rapidez e praticidade para nossas refeicoes.",
+    "unitPrice": 349,
+    "currencyId": "BRL",
+    "category": "Cozinha",
+    "active": true
+  },
+  {
+    "id": "jogo-de-jantar",
+    "title": "Jogo de jantar",
+    "description": "Para montar uma mesa linda em momentos especiais.",
+    "unitPrice": 216,
+    "currencyId": "BRL",
+    "category": "Mesa posta",
+    "active": true
+  },
+  {
+    "id": "jogo-de-talheres-dourado",
+    "title": "Jogo de talheres dourado",
+    "description": "Um toque elegante para a nossa mesa posta.",
+    "unitPrice": 137,
+    "currencyId": "BRL",
+    "category": "Mesa posta",
+    "active": true
+  },
+  {
+    "id": "sanduicheira",
+    "title": "Sanduicheira",
+    "description": "Para cafes da manha e lanches rapidos no dia a dia.",
+    "unitPrice": 89,
+    "currencyId": "BRL",
+    "category": "Cozinha",
+    "active": true
+  },
+  {
+    "id": "jogo-de-panelas",
+    "title": "Jogo de panelas",
+    "description": "Um essencial para comecarmos a nossa casa.",
+    "unitPrice": 393,
+    "currencyId": "BRL",
+    "category": "Cozinha",
+    "active": true
+  },
+  {
+    "id": "faqueiro",
+    "title": "Faqueiro",
+    "description": "Para completar a nossa mesa com praticidade.",
+    "unitPrice": 150,
+    "currencyId": "BRL",
+    "category": "Mesa posta",
+    "active": true
+  },
+  {
+    "id": "edredom-queen",
+    "title": "Edredom queen",
+    "description": "Para deixar nosso cantinho ainda mais aconchegante.",
+    "unitPrice": 189,
+    "currencyId": "BRL",
+    "category": "Cama e banho",
+    "active": true
+  },
+  {
+    "id": "jogo-de-cama",
+    "title": "Jogo de cama",
+    "description": "Para noites tranquilas no nosso novo lar.",
+    "unitPrice": 79,
+    "currencyId": "BRL",
+    "category": "Cama e banho",
+    "active": true
+  },
+  {
+    "id": "ventilador",
+    "title": "Ventilador",
+    "description": "Para refrescar os nossos dias com mais conforto.",
+    "unitPrice": 139,
+    "currencyId": "BRL",
+    "category": "Casa",
+    "active": true
+  },
+  {
+    "id": "kit-para-churrasco",
+    "title": "Kit para churrasco",
+    "description": "Para reunirmos a familia e os amigos em casa.",
+    "unitPrice": 89,
+    "currencyId": "BRL",
+    "category": "Lazer",
+    "active": true
+  },
+  {
+    "id": "ferro-de-passar",
+    "title": "Ferro de passar",
+    "description": "Mais praticidade para a rotina da casa.",
+    "unitPrice": 84,
+    "currencyId": "BRL",
+    "category": "Casa",
+    "active": true
+  },
+  {
+    "id": "robo-aspirador-de-casa",
+    "title": "Robô aspirador de pó",
+    "description": "Mais praticidade para manter nosso lar em ordem.",
+    "unitPrice": 134,
+    "currencyId": "BRL",
+    "category": "Limpeza",
+    "active": true
+  },
+  {
+    "id": "maquina-de-cafe",
+    "title": "Máquina de café",
+    "description": "Para um cafe especial a qualquer hora do dia.",
+    "unitPrice": 139,
+    "currencyId": "BRL",
+    "category": "Cozinha",
+    "active": true
+  },
+  {
+    "id": "noiva-sempre-certa",
+    "title": "Ajuda para a noiva continuar sempre certa",
+    "description": "Uma contribuicao bem-humorada para manter a paz e a razao oficialmente do lado dela.",
+    "unitPrice": 120,
+    "currencyId": "BRL",
+    "category": "Presentes divertidos",
+    "active": true
+  },
+  {
+    "id": "vestido-branco",
+    "title": "Ir de vestido Branco",
+    "description": "Para quem quiser testar a paciencia da noiva em grande estilo.",
+    "unitPrice": 5000,
+    "currencyId": "BRL",
+    "category": "Presentes divertidos",
+    "active": true
+  },
+  {
+    "id": "fila-do-buffet",
+    "title": "Primeiro lugar na fila do buffet",
+    "description": "Um passe simbolico e disputadissimo para largar na frente na hora da comida.",
+    "unitPrice": 80,
+    "currencyId": "BRL",
+    "category": "Presentes divertidos",
+    "active": true
+  },
+  {
+    "id": "anti-briga-cobertor",
+    "title": "Taxa anti-briga por cobertor",
+    "description": "Ajuda preventiva para evitar a primeira guerra fria do casal durante a noite.",
+    "unitPrice": 90,
+    "currencyId": "BRL",
+    "category": "Presentes divertidos",
+    "active": true
+  },
+  {
+    "id": "lenco-maquiagem",
+    "title": "Lenco para nao borrar a maquiagem",
+    "description": "Para segurar a emocao sem estragar o look perfeito do grande dia.",
+    "unitPrice": 45,
+    "currencyId": "BRL",
+    "category": "Presentes divertidos",
+    "active": true
+  },
+  {
+    "id": "impedir-buque",
+    "title": "Impedir sua mulher de pegar o buque",
+    "description": "Contribuicao estrategica para quem ainda nao quer correr riscos no momento do buque.",
+    "unitPrice": 150,
+    "currencyId": "BRL",
+    "category": "Presentes divertidos",
+    "active": true
+  },
+  {
+    "id": "jogar-buque",
+    "title": "Jogar o buque na sua direcao",
+    "description": "Um incentivo premium para aumentar suas chances nesse momento decisivo.",
+    "unitPrice": 180,
+    "currencyId": "BRL",
+    "category": "Presentes divertidos",
+    "active": true
+  },
+  {
+    "id": "terapia-casal",
+    "title": "Fundo da terapia de casal preventiva",
+    "description": "Porque rir agora e se prevenir depois tambem faz parte do casamento.",
+    "unitPrice": 250,
+    "currencyId": "BRL",
+    "category": "Presentes divertidos",
+    "active": true
+  },
+  {
+    "id": "valor-livre",
+    "title": "Presente de valor livre",
+    "description": "Escolha qualquer valor para presentear Luíza & Luan.",
+    "unitPrice": 100,
+    "currencyId": "BRL",
+    "category": "Valor livre",
+    "active": true,
+    "allowCustomAmount": true,
+    "minimumPrice": 1
+  }
+]

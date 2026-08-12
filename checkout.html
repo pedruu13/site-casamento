@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Seguro - Luíza & Luan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;600&family=Alex+Brush&display=swap" rel="stylesheet">
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <style>
+        :root {
+            --bg-color: #161616;
+            --gold-primary: #d4c2a5;
+            --gold-light: #e6dcc6;
+            --gold-dark: #a8936f;
+            --text-light: #fcfaf7;
+            --font-serif: 'Cinzel', serif;
+            --font-sans: 'Montserrat', sans-serif;
+            --font-accent: 'Alex Brush', cursive;
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(212, 194, 165, 0.2);
+            --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checkout-container {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 0 20px rgba(212, 175, 55, 0.05);
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .checkout-header h1 {
+            font-family: var(--font-serif);
+            color: var(--gold-primary);
+            margin: 0 0 1rem 0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .gift-summary {
+            background: rgba(26, 21, 16, 0.6);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .gift-summary h3 {
+            margin: 0 0 0.5rem 0;
+            font-family: var(--font-serif);
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .gift-price {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--gold-primary);
+            margin: 0;
+            font-style: italic;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--gold-primary);
+            color: var(--bg-color);
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 1rem;
+            box-sizing: border-box;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+            box-shadow: 0 0 20px rgba(212, 194, 165, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: #555;
+            color: #999;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(22, 22, 22, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--bg-color);
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        #error-message {
+            display: none;
+            color: #ff6b6b;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="checkout-container" id="checkout-main">
+        <div class="checkout-header">
+            <h1>Presentear</h1>
+            <p>Escolha como deseja pagar o seu presente</p>
+        </div>
+
+        <div class="gift-summary">
+            <h3 id="gift-name">Carregando...</h3>
+            <p class="gift-price" id="gift-price">R$ 0,00</p>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:1.5rem;margin-bottom:1.5rem;padding:0.7rem 1rem;border-radius:8px;background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.25);">
+            <span style="color:#81c784;font-size:1.1rem;">✓</span>
+            <span style="color:#c8e6c9;font-size:0.82rem;font-family:var(--font-sans);">Pagamento 100% seguro via Mercado Pago</span>
+        </div>
+
+        <button id="pay-button" class="btn-primary" disabled>
+            <span>Carregando...</span>
+            <div class="loading-spinner" id="btn-spinner"></div>
+        </button>
+        <div id="error-message">Erro ao gerar pagamento. Tente novamente.</div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const giftId = urlParams.get('giftId');
+        
+        if (!giftId) {
+            alert('Presente inválido.');
+            window.location.href = '/presentes.html';
+        }
+
+        let amount = 0;
+        let checkoutUrl = null;
+
+        // Função para carregar valor e depois preparar pagamento
+        function loadGiftData() {
+            if (giftId === 'valor-livre') {
+                const urlAmount = urlParams.get('amount');
+                amount = urlAmount ? parseFloat(urlAmount) : 100;
+                document.getElementById('gift-name').textContent = 'Valor Livre';
+                document.getElementById('gift-price').textContent = `R$ ${amount.toFixed(2).replace('.', ',')}`;
+                preparePayment();
+            } else {
+                fetch('data/gifts.json')
+                    .then(res => res.json())
+                    .then(gifts => {
+                        const gift = gifts.find(g => g.id === giftId);
+                        if (gift) {
+                            amount = gift.unitPrice;
+                            document.getElementById('gift-name').textContent = gift.title;
+                            document.getElementById('gift-price').textContent = `R$ ${amount.toFixed(2).replace('.', ',')}`;
+                            preparePayment();
+                        } else {
+                            alert('Presente não encontrado.');
+                            window.location.href = '/presentes.html';
+                        }
+                    })
+                    .catch(e => {
+                        console.error('Erro ao buscar presentes:', e);
+                    });
+            }
+        }
+
+        async function preparePayment() {
+            const btn = document.getElementById('pay-button');
+            const errorMsg = document.getElementById('error-message');
+            
+            try {
+                const res = await fetch("/api/create-preference", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ giftId: giftId, amount: amount })
+                });
+                
+                const data = await res.json();
+                
+                if (data.checkoutUrl) {
+                    checkoutUrl = data.checkoutUrl;
+                    
+                    // Ativa o botão
+                    btn.disabled = false;
+                    btn.querySelector('span').textContent = 'Ir para o Pagamento';
+                    
+                    // Ao clicar, redireciona para o Mercado Pago
+                    btn.onclick = () => {
+                        btn.querySelector('span').style.display = 'none';
+                        document.getElementById('btn-spinner').style.display = 'block';
+                        btn.disabled = true;
+                        window.location.href = checkoutUrl;
+                    };
+                } else {
+                    console.error("Erro ao criar preferência:", data);
+                    btn.querySelector('span').textContent = 'Indisponível';
+                    errorMsg.style.display = 'block';
+                }
+            } catch (err) {
+                console.error("Erro na requisição:", err);
+                btn.querySelector('span').textContent = 'Indisponível';
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        loadGiftData();
+    </script>
+</body>
+</html>

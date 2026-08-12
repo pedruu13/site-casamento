@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área dos Noivos - Presenças</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #161616;
+            --gold-primary: #d4c2a5;
+            --text-light: #fcfaf7;
+            --font-serif: 'Cinzel', serif;
+            --font-sans: 'Montserrat', sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            font-family: var(--font-sans);
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            font-family: var(--font-serif);
+            color: var(--gold-primary);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .presence-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .presence-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+        }
+        .presence-item strong {
+            font-size: 1.1rem;
+        }
+        .presence-item span {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--gold-primary);
+            text-decoration: none;
+            border: 1px solid var(--gold-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Voltar para o site</a>
+    <h1>Lista de Presença</h1>
+    <h2 id="summary">Carregando...</h2>
+    
+    <div class="presence-list" id="presenceList"></div>
+
+    <script>
+        const presenceList = document.getElementById('presenceList');
+        const summary = document.getElementById('summary');
+        const presenceApiUrl = window.location.protocol === 'file:' 
+            ? 'http://localhost:3000/api/presences'
+            : `${window.location.origin}/api/presences`;
+
+        async function loadPresenceList() {
+            try {
+                const response = await fetch(presenceApiUrl);
+                if (!response.ok) throw new Error('Falha');
+                const data = await response.json();
+                const presences = Array.isArray(data.presences) ? data.presences : [];
+                renderList(presences);
+            } catch (error) {
+                const names = JSON.parse(localStorage.getItem('luizaLuanPresencas') || '[]');
+                const presences = names.map(name => ({ name, createdAt: null }));
+                renderList(presences.reverse());
+            }
+        }
+
+        function renderList(presences) {
+            summary.innerText = `Total: ${presences.length} confirmações`;
+            presenceList.innerHTML = '';
+            presences.forEach(p => {
+                const item = document.createElement('div');
+                item.className = 'presence-item';
+                const date = p.createdAt ? new Date(p.createdAt).toLocaleDateString('pt-BR') : 'Sem data';
+                item.innerHTML = `<strong>${p.name}</strong> <span>${date}</span>`;
+                presenceList.appendChild(item);
+            });
+        }
+
+        loadPresenceList();
+    </script>
+</body>
+</html>

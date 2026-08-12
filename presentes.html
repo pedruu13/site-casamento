@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentes - Luíza & Luan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500&family=Alex+Brush&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #000000;
+            --gold-primary: #d4c2a5;
+            --gold-light: #e6dcc6;
+            --gold-dark: #a8936f;
+            --text-light: #fcfaf7;
+            --font-serif: 'Cinzel', serif;
+            --font-sans: 'Montserrat', sans-serif;
+            --font-accent: 'Alex Brush', cursive;
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(212, 194, 165, 0.2);
+
+            --bg: var(--bg-color);
+            --surface: var(--glass);
+            --fg: var(--text-light);
+            --muted: rgba(252, 250, 247, 0.6);
+            --border: var(--glass-border);
+            --accent: var(--gold-primary);
+            --font-display: var(--font-serif);
+            --font-body: var(--font-sans);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--fg);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+
+
+        .skip-link {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1000;
+            transform: translateY(-140%);
+            background: var(--fg);
+            color: var(--bg-color);
+            padding: 0.8rem 1rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+
+        .skip-link:focus {
+            transform: translateY(0);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        header {
+            position: relative;
+            z-index: 1;
+            padding: 3rem 5vw 2rem;
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .brand,
+        .back-link {
+            color: var(--fg);
+            text-decoration: none;
+        }
+
+        .brand {
+            font-family: var(--font-display);
+            font-size: 2rem;
+        }
+
+        .back-link {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            opacity: 0.68;
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+            padding: 4rem 5vw 7rem;
+        }
+
+        .intro {
+            max-width: 920px;
+            margin-bottom: 4rem;
+        }
+
+        .eyebrow {
+            display: block;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.24em;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.3rem;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-weight: 300;
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            line-height: 0.92;
+            margin-bottom: 2rem;
+        }
+
+        .intro p {
+            max-width: 660px;
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
+
+        .intro-note {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            margin-top: 1.4rem;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: rgba(255,255,255,0.04);
+            color: var(--gold-light);
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .gifts-page-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        
+        .gifts-page-grid > * {
+            flex: 1 1 280px;
+            max-width: 340px;
+        }
+
+        .gifts-sections {
+            display: block;
+        }
+
+        .gifts-section {
+            margin-top: 2.5rem;
+        }
+
+        .gifts-section + .gifts-section {
+            margin-top: 3rem;
+        }
+
+        .gifts-section-head {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .gifts-section-head h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 400;
+            line-height: 1;
+        }
+
+        .gifts-section-head p {
+            color: var(--muted);
+            max-width: 640px;
+            font-size: 0.95rem;
+        }
+
+        .gifts-section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.45rem 0.8rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            color: var(--gold-light);
+            background: rgba(255,255,255,0.04);
+            font-size: 0.72rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-filters button {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.045);
+            border-radius: 999px;
+            color: var(--gold-light);
+            padding: 0.8rem 1rem;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            cursor: pointer;
+        }
+
+        .category-filters button.is-active {
+            background: var(--gold-primary);
+            border-color: var(--gold-primary);
+            color: var(--bg-color);
+            font-weight: 700;
+        }
+
+        .gift-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        .gift-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .gift-photo {
+            aspect-ratio: 16 / 10;
+            border-radius: 14px;
+            background: rgba(91,26,45,0.42);
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            color: var(--fg);
+            font-family: var(--font-display);
+            font-size: clamp(1.1rem, 2vw, 1.7rem);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-align: left;
+            padding: 0.85rem 0.85rem 0.75rem;
+            min-height: 120px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gift-photo img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gift-photo::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(6,6,6,0.85) 0%, rgba(6,6,6,0.2) 50%, rgba(6,6,6,0.05) 100%);
+            z-index: 1;
+        }
+
+        .gift-photo-icon {
+            position: relative;
+            z-index: 3;
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            margin: 0 0 0.75rem;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.22);
+            font-size: 1.1rem;
+        }
+
+        .gift-photo-copy {
+            position: relative;
+            z-index: 3;
+        }
+
+        .gift-photo span {
+            display: block;
+            text-shadow: 0 10px 22px rgba(0,0,0,0.35);
+            font-size: 1.05rem;
+            line-height: 1;
+        }
+
+        .gift-photo small {
+            display: block;
+            margin-top: 0.35rem;
+            color: rgba(252, 250, 247, 0.82);
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+        }
+
+        .gift-category {
+            color: var(--accent);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-weight: 700;
+        }
+
+        .gift-item h2 {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: 1.5rem;
+            line-height: 1.05;
+        }
+
+        .gift-item p {
+            color: var(--muted);
+        }
+
+        .gift-price {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: auto;
+        }
+
+        .custom-amount {
+            width: 100%;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.05);
+            color: var(--fg);
+            border-radius: 14px;
+            padding: 0.95rem 1rem;
+            font: inherit;
+        }
+
+        .gift-item button {
+            border: 1px solid rgba(212, 175, 55, 0.65);
+            border-radius: 999px;
+            background: rgba(8, 8, 8, 0.72);
+            color: var(--gold-light);
+            padding: 1rem 1.2rem;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            cursor: pointer;
+            transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+        }
+
+        .gift-item button:hover {
+            background: var(--gold-primary);
+            color: var(--bg-color);
+            transform: translateY(-2px);
+        }
+
+        .gift-item button:disabled {
+            opacity: 0.62;
+            cursor: wait;
+        }
+
+        .status {
+            min-height: 1.4rem;
+            margin-top: 2rem;
+            color: var(--muted);
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: grid;
+            place-items: center;
+            padding: 1.5rem;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal[hidden] {
+            display: none;
+        }
+
+        .modal-card {
+            width: min(100%, 520px);
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            color: var(--fg);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 30px 100px rgba(0,0,0,0.5);
+        }
+
+        .modal-card h2 {
+            font-family: var(--font-display);
+            font-size: 2.4rem;
+            font-weight: 400;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .modal-card p {
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .modal-actions button {
+            border: 0;
+            border-radius: 999px;
+            padding: 0.9rem 1.1rem;
+            cursor: pointer;
+        }
+
+        .modal-actions .confirm {
+            background: var(--fg);
+            color: #0a0a0a;
+            font-weight: 600;
+        }
+
+        .modal-actions .cancel {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+        }
+
+        @media (max-width: 680px) {
+            header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+    <header>
+        <a class="brand" href="index.html">Luíza & Luan</a>
+        <a class="back-link" href="index.html#presentes">Voltar ao site</a>
+    </header>
+
+    <main id="conteudo">
+        <section class="intro">
+            <span class="eyebrow">Lista completa</span>
+            <h1>Escolha um presente</h1>
+            <p>Você pode escolher um item da lista ou usar o valor livre para contribuir com o nosso novo ciclo juntos.</p>
+            <div class="intro-note">Selecione um presente e avance para o Mercado Pago</div>
+        </section>
+
+        <nav class="category-filters" id="category-filters" aria-label="Categorias de presentes"></nav>
+        <section class="gifts-sections" id="gifts-grid"></section>
+        <div class="status" id="status" role="status" aria-live="polite"></div>
+    </main>
+
+    <div class="modal" id="summary-modal" hidden role="dialog" aria-modal="true" aria-labelledby="summary-title">
+        <div class="modal-card">
+            <span class="sr-only" id="summary-label">Resumo do presente</span>
+            <h2 id="summary-title">Resumo do presente</h2>
+            <p id="summary-description"></p>
+            <strong id="summary-price"></strong>
+            <div class="modal-actions">
+                <button class="confirm" id="summary-confirm" type="button">Continuar com Mercado Pago</button>
+                <button class="cancel" id="summary-cancel" type="button">Voltar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const gifts = [
+            {
+                id: 'panela-de-arroz',
+                title: 'Panela de arroz',
+                description: 'Para o arroz soltinho dos nossos almoços em casa.',
+                price: 149,
+                category: 'Cozinha',
+                visual: 'Arroz'
+            },
+            {
+                id: 'liquidificador',
+                title: 'Liquidificador',
+                description: 'Para sucos, vitaminas e receitas do nosso novo lar.',
+                price: 89,
+                category: 'Cozinha',
+                visual: 'Mix'
+            },
+            {
+                id: 'forno-eletrico',
+                title: 'Forno elétrico',
+                description: 'Para assados, bolos e muitas receitas especiais.',
+                price: 360,
+                category: 'Eletrodomésticos',
+                visual: 'Forno'
+            },
+            {
+                id: 'microondas',
+                title: 'Microondas',
+                description: 'Praticidade no dia a dia da nossa cozinha.',
+                price: 499,
+                category: 'Eletrodomésticos',
+                visual: 'Micro'
+            },
+            {
+                id: 'multiprocessador',
+                title: 'Multiprocessador',
+                description: 'Para facilitar o preparo das nossas receitas.',
+                price: 179,
+                category: 'Cozinha',
+                visual: 'Chef'
+            },
+            {
+                id: 'panela-de-pressao-eletrica',
+                title: 'Panela de pressão elétrica',
+                description: 'Mais rapidez e praticidade para nossas refeicoes.',
+                price: 349,
+                category: 'Cozinha',
+                visual: 'Pressao'
+            },
+            {
+                id: 'jogo-de-jantar',
+                title: 'Jogo de jantar',
+                description: 'Para montar uma mesa linda em momentos especiais.',
+                price: 216,
+                category: 'Mesa posta',
+                visual: 'Mesa'
+            },
+            {
+                id: 'jogo-de-talheres-dourado',
+                title: 'Jogo de talheres dourado',
+                description: 'Um toque elegante para a nossa mesa posta.',
+                price: 137,
+                category: 'Mesa posta',
+                visual: 'Dourado'
+            },
+            {
+                id: 'sanduicheira',
+                title: 'Sanduicheira',
+                description: 'Para cafes da manha e lanches rapidos no dia a dia.',
+                price: 89,
+                category: 'Cozinha',
+                visual: 'Lanche'
+            },
+            {
+                id: 'jogo-de-panelas',
+                title: 'Jogo de panelas',
+                description: 'Um essencial para comecarmos a nossa casa.',
+                price: 393,
+                category: 'Cozinha',
+                visual: 'Panelas'
+            },
+            {
+                id: 'faqueiro',
+                title: 'Faqueiro',
+                description: 'Para completar a nossa mesa com praticidade.',
+                price: 150,
+                category: 'Mesa posta',
+                visual: 'Inox'
+            },
+            {
+                id: 'edredom-queen',
+                title: 'Edredom queen',
+                description: 'Para deixar nosso cantinho ainda mais aconchegante.',
+                price: 189,
+                category: 'Cama e banho',
+                visual: 'Queen'
+            },
+            {
+                id: 'jogo-de-cama',
+                title: 'Jogo de cama',
+                description: 'Para noites tranquilas no nosso novo lar.',
+                price: 79,
+                category: 'Cama e banho',
+                visual: 'Cama'
+            },
+            {
+                id: 'ventilador',
+                title: 'Ventilador',
+                description: 'Para refrescar os nossos dias com mais conforto.',
+                price: 139,
+                category: 'Casa',
+                visual: 'Brisa'
+            },
+            {
+                id: 'kit-para-churrasco',
+                title: 'Kit para churrasco',
+                description: 'Para reunirmos a familia e os amigos em casa.',
+                price: 89,
+                category: 'Lazer',
+                visual: 'Churras'
+            },
+            {
+                id: 'ferro-de-passar',
+                title: 'Ferro de passar',
+                description: 'Mais praticidade para a rotina da casa.',
+                price: 84,
+                category: 'Casa',
+                visual: 'Roupa'
+            },
+            {
+                id: 'robo-aspirador-de-casa',
+                title: 'Robô aspirador de pó',
+                description: 'Mais praticidade para manter nosso lar em ordem.',
+                price: 134,
+                category: 'Limpeza',
+                visual: 'Robo'
+            },
+            {
+                id: 'maquina-de-cafe',
+                title: 'Máquina de café',
+                description: 'Para um cafe especial a qualquer hora do dia.',
+                price: 139,
+                category: 'Cozinha',
+                visual: 'Expresso'
+            },
+            {
+                id: 'noiva-sempre-certa',
+                title: 'Ajuda para a noiva continuar sempre certa',
+                description: 'Uma contribuicao bem-humorada para manter a paz e a razao oficialmente do lado dela.',
+                price: 120,
+                category: 'Presentes divertidos',
+                visual: 'Razao'
+            },
+            {
+                id: 'vestido-branco',
+                title: 'Ir de vestido Branco',
+                description: 'Para quem quiser testar a paciencia da noiva em grande estilo.',
+                price: 5000,
+                category: 'Presentes divertidos',
+                visual: 'Branco'
+            },
+            {
+                id: 'fila-do-buffet',
+                title: 'Primeiro lugar na fila do buffet',
+                description: 'Um passe simbolico e disputadissimo para largar na frente na hora da comida.',
+                price: 80,
+                category: 'Presentes divertidos',
+                visual: 'Buffet'
+            },
+            {
+                id: 'anti-briga-cobertor',
+                title: 'Taxa anti-briga por cobertor',
+                description: 'Ajuda preventiva para evitar a primeira guerra fria do casal durante a noite.',
+                price: 90,
+                category: 'Presentes divertidos',
+                visual: 'Cobertor'
+            },
+            {
+                id: 'lenco-maquiagem',
+                title: 'Lenco para nao borrar a maquiagem',
+                description: 'Para segurar a emocao sem estragar o look perfeito do grande dia.',
+                price: 45,
+                category: 'Presentes divertidos',
+                visual: 'Make'
+            },
+            {
+                id: 'impedir-buque',
+                title: 'Impedir sua mulher de pegar o buque',
+                description: 'Contribuicao estrategica para quem ainda nao quer correr riscos no momento do buque.',
+                price: 150,
+                category: 'Presentes divertidos',
+                visual: 'Buque'
+            },
+            {
+                id: 'jogar-buque',
+                title: 'Jogar o buque na sua direcao',
+                description: 'Um incentivo premium para aumentar suas chances nesse momento decisivo.',
+                price: 180,
+                category: 'Presentes divertidos',
+                visual: 'Mira'
+            },
+            {
+                id: 'terapia-casal',
+                title: 'Fundo da terapia de casal preventiva',
+                description: 'Porque rir agora e se prevenir depois tambem faz parte do casamento.',
+                price: 250,
+                category: 'Presentes divertidos',
+                visual: 'Terapia'
+            },
+            {
+                id: 'valor-livre',
+                title: 'Presente de valor livre',
+                description: 'Escolha qualquer valor para presentear Luíza & Luan.',
+                price: null,
+                custom: true,
+                category: 'Valor livre',
+                visual: 'Livre'
+            }
+        ];
+        const giftIcons = {
+            'panela-de-arroz': '&#127834;',
+            'liquidificador': '&#129747;',
+            'forno-eletrico': '&#128293;',
+            'microondas': '&#127869;&#65039;',
+            'multiprocessador': '&#128298;',
+            'panela-de-pressao-eletrica': '&#129368;',
+            'jogo-de-jantar': '&#127869;',
+            'jogo-de-talheres-dourado': '&#127860;',
+            'batedeira': '&#129473;',
+            'sanduicheira': '&#129386;',
+            'jogo-de-panelas': '&#127859;',
+            'faqueiro': '&#127860;',
+            'edredom-queen': '&#128719;&#65039;',
+            'jogo-de-cama': '&#129523;',
+            'ventilador': '&#128168;',
+            'kit-para-churrasco': '&#129385;',
+            'ferro-de-passar': '&#128084;',
+            'maquina-de-cafe': '&#9749;',
+            'ajuda-lua-de-mel': '&#9992;&#65039;',
+            'televisao': '&#128250;',
+            'robo-aspirador-de-casa': '&#129302;',
+            'valor-livre': '&#127873;'
+        };
+
+        giftIcons['noiva-sempre-certa'] = '&#128081;';
+        giftIcons['vestido-branco'] = '&#129293;';
+        giftIcons['fila-do-buffet'] = '&#127869;&#65039;';
+        giftIcons['anti-briga-cobertor'] = '&#128719;&#65039;';
+        giftIcons['lenco-maquiagem'] = '&#128132;';
+        giftIcons['impedir-buque'] = '&#128581;&#8205;&#9792;&#65039;';
+        giftIcons['jogar-buque'] = '&#128144;';
+        giftIcons['terapia-casal'] = '&#129730;';
+
+        const giftImages = {
+            'panela-de-arroz': 'assets/presentes/panela-arroz.jpg',
+            'liquidificador': 'assets/presentes/blender.jpg',
+            'forno-eletrico': 'assets/presentes/forno-micro.jpg',
+            'microondas': 'assets/presentes/microondas-real.jpg',
+            'multiprocessador': 'assets/presentes/multiprocessador-real.jpg',
+            'panela-de-pressao-eletrica': 'assets/presentes/pressao-real.jpg',
+            'jogo-de-jantar': 'assets/presentes/mesa-posta.jpg',
+            'jogo-de-talheres-dourado': 'assets/presentes/talheres-real.jpg',
+            'batedeira': 'assets/presentes/batedeira-real.jpg',
+            'sanduicheira': 'assets/presentes/sanduicheira-real.jpg',
+            'jogo-de-panelas': 'assets/presentes/panela-arroz.jpg',
+            'faqueiro': 'assets/presentes/talheres-real.jpg',
+            'edredom-queen': 'assets/presentes/cama.jpg',
+            'jogo-de-cama': 'assets/presentes/jogo-cama-real.jpg',
+            'ventilador': 'assets/presentes/ventilador.jpg',
+            'kit-para-churrasco': 'assets/presentes/churrasco.jpg',
+            'ferro-de-passar': 'assets/presentes/ferro-passar.jpg',
+            'maquina-de-cafe': 'assets/presentes/maquina-cafe.jpg',
+            'televisao': 'assets/presentes/televisao-real.jpg',
+            'robo-aspirador-de-casa': 'assets/presentes/robo-aspirador.jpg',
+            'noiva-sempre-certa': 'assets/presentes/noiva-sempre-certa.jpg',
+            'vestido-branco': 'assets/presentes/vestido-branco.jpg',
+            'fila-do-buffet': 'assets/presentes/fila-buffet.jpg',
+            'anti-briga-cobertor': 'assets/presentes/cobertor.jpg',
+            'lenco-maquiagem': 'assets/presentes/maquiagem-lenco.jpg',
+            'impedir-buque': 'assets/presentes/buque.jpg',
+            'jogar-buque': 'assets/presentes/buque-direcao.jpg',
+            'terapia-casal': 'assets/presentes/terapia-casal.jpg'
+        };
+
+        const giftImagePositions = {
+            'jogo-de-jantar': 'center',
+            'jogo-de-talheres-dourado': 'center',
+            'faqueiro': 'top',
+            'edredom-queen': 'center',
+            'jogo-de-cama': 'center',
+            'noiva-sempre-certa': 'center',
+            'vestido-branco': 'center top',
+            'fila-do-buffet': 'center',
+            'anti-briga-cobertor': 'center',
+            'lenco-maquiagem': 'center',
+            'impedir-buque': 'center',
+            'jogar-buque': 'center',
+            'terapia-casal': 'center'
+        };
+
+        const grid = document.querySelector('#gifts-grid');
+        const filters = document.querySelector('#category-filters');
+        const status = document.querySelector('#status');
+        const modal = document.querySelector('#summary-modal');
+        const summaryTitle = document.querySelector('#summary-title');
+        const summaryDescription = document.querySelector('#summary-description');
+        const summaryPrice = document.querySelector('#summary-price');
+        const summaryConfirm = document.querySelector('#summary-confirm');
+        const summaryCancel = document.querySelector('#summary-cancel');
+        let activeCategory = 'Todos';
+        let pendingGift = null;
+
+        function formatPrice(value) {
+            return value.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            });
+        }
+
+        function renderFilters() {
+            const categories = ['Todos', ...new Set(gifts.map(gift => gift.category))];
+            filters.innerHTML = categories.map(category => `
+                <button type="button" class="${category === activeCategory ? 'is-active' : ''}" data-category="${category}">${category}</button>
+            `).join('');
+        }
+
+
+
+
+
+        function renderGiftCard(gift) {
+            return `
+                <article class="gift-item">
+                    <div class="gift-photo" aria-hidden="true">
+                        ${giftImages[gift.id] ? `<img src="${giftImages[gift.id]}" loading="lazy" alt="" style="object-position: ${giftImagePositions[gift.id] || 'center'};">` : ''}
+                        <div class="gift-photo-copy">
+                            <div class="gift-photo-icon">${giftIcons[gift.id] || '&#127873;'}</div>
+                            <span>${gift.visual}</span>
+                            <small>${gift.title}</small>
+                        </div>
+                    </div>
+                    <span class="gift-category">${gift.category}</span>
+                    <h2>${gift.title}</h2>
+                    <p>${gift.description}</p>
+                    ${gift.custom
+                        ? '<input class="custom-amount" type="number" min="1" step="1" placeholder="Valor em R$" aria-label="Valor do presente livre">'
+                        : `<div class="gift-price">${formatPrice(gift.price)}</div>`
+                    }
+                    <button type="button" data-gift-id="${gift.id}">Comprar presente</button>
+                </article>
+            `;
+        }
+
+        function renderGiftSection(title, note, tag, items) {
+            if (!items.length) return '';
+            return `
+                <section class="gifts-section">
+                    <div class="gifts-section-head">
+                        <div>
+                            <div class="gifts-section-tag">${tag}</div>
+                            <h2>${title}</h2>
+                        </div>
+                        <p>${note}</p>
+                    </div>
+                    <div class="gifts-page-grid">
+                        ${items.map(renderGiftCard).join('')}
+                    </div>
+                </section>
+            `;
+        }
+
+        renderGifts = function() {
+            const visibleGifts = activeCategory === 'Todos'
+                ? gifts
+                : gifts.filter(gift => gift.category === activeCategory);
+
+            if (activeCategory !== 'Todos') {
+                grid.innerHTML = visibleGifts.map(renderGiftCard).join('');
+                return;
+            }
+
+            const funnyCategory = 'Presentes divertidos';
+            const freeCategory = 'Valor livre';
+            const funnyGifts = gifts.filter(gift => gift.category === funnyCategory);
+            const freeGifts = gifts.filter(gift => gift.category === freeCategory);
+            const realGifts = gifts.filter(gift => gift.category !== funnyCategory && gift.category !== freeCategory);
+
+            grid.innerHTML = [
+                renderGiftSection(
+                    'Presentes reais',
+                    'Itens para o novo lar e para a rotina do casal.',
+                    'Lista principal',
+                    realGifts
+                ),
+                renderGiftSection(
+                    'Presentes divertidos',
+                    'Brincadeiras escolhidas para render risada sem virar bagunca.',
+                    'Extra',
+                    funnyGifts
+                ),
+                renderGiftSection(
+                    'Valor livre',
+                    'Para quem prefere contribuir com qualquer quantia.',
+                    'Livre',
+                    freeGifts
+                )
+            ].join('');
+        }
+
+        function openSummary(gift, amount, button) {
+            pendingGift = { gift, amount, button };
+            summaryTitle.textContent = gift.title;
+            summaryDescription.textContent = gift.description;
+            summaryPrice.textContent = gift.custom ? formatPrice(amount) : formatPrice(gift.price);
+            modal.hidden = false;
+            summaryConfirm.focus();
+        }
+
+        function closeSummary() {
+            modal.hidden = true;
+            if (pendingGift?.button) {
+                pendingGift.button.focus();
+            }
+        }
+
+        function checkout(giftId, amount, button) {
+            button.disabled = true;
+            button.textContent = 'Abrindo checkout...';
+            
+            let url = `checkout.html?giftId=${giftId}`;
+            if (amount !== undefined && amount !== null && !isNaN(amount)) {
+                url += `&amount=${amount}`;
+            }
+            window.location.href = url;
+        }
+
+        filters.addEventListener('click', (event) => {
+            const button = event.target.closest('button[data-category]');
+            if (!button) return;
+            activeCategory = button.dataset.category;
+            renderFilters();
+            renderGifts();
+        });
+
+        grid.addEventListener('click', (event) => {
+            const button = event.target.closest('button[data-gift-id]');
+            if (!button) return;
+
+            const card = button.closest('.gift-item');
+            const giftId = button.dataset.giftId;
+            const gift = gifts.find(item => item.id === giftId);
+            const amountInput = card.querySelector('.custom-amount');
+            const amount = amountInput ? Number(amountInput.value) : undefined;
+
+            if (amountInput && (!Number.isFinite(amount) || amount < 1)) {
+                status.textContent = 'Informe um valor livre de pelo menos R$ 1,00.';
+                amountInput.focus();
+                return;
+            }
+
+            openSummary(gift, amount, button);
+        });
+
+        summaryConfirm.addEventListener('click', () => {
+            if (!pendingGift) return;
+            checkout(pendingGift.gift.id, pendingGift.amount, pendingGift.button);
+            modal.hidden = true;
+        });
+
+        summaryCancel.addEventListener('click', closeSummary);
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) closeSummary();
+        });
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !modal.hidden) closeSummary();
+        });
+
+        renderFilters();
+        renderGifts();
+
+
+    </script>
+</body>
+</html>
+
+
+

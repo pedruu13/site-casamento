@@ -1,0 +1,4 @@
+.env
+data/mercado-pago-webhooks.jsonl
+
+.vercel

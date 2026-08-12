@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luíza & Luan - O nosso para sempre</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;600&family=Alex+Brush&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #000000;
+            --gold-primary: #d4c2a5;
+            --gold-light: #e6dcc6;
+            --gold-dark: #a8936f;
+            --text-light: #fcfaf7;
+            --font-serif: 'Cinzel', serif;
+            --font-sans: 'Montserrat', sans-serif;
+            --font-accent: 'Alex Brush', cursive;
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(212, 194, 165, 0.2);
+            --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            line-height: 1.6;
+        }
+
+        /* Cursor Animado Responsivo */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--gold-light);
+            box-shadow: 0 0 10px var(--gold-primary);
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(201, 168, 76, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        h1, h2, h3, h4, .serif {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .cursive {
+            font-family: var(--font-accent);
+            font-size: 3rem;
+            color: var(--gold-light);
+            text-shadow: none;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            padding: 1rem 5%;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--gold-primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--gold-light);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('assets/mouoed00-image.png'); /* Imagem do casal real deve entrar aqui */
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            transform: scale(1.05); /* parallax sutil */
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 50% 52%, rgba(212,175,55,0.12), transparent 34%),
+                linear-gradient(to bottom, rgba(10,10,10,0.34) 0%, rgba(10,10,10,0.9) 100%);
+            z-index: -1;
+        }
+
+        #hero-3d {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.92;
+            mix-blend-mode: screen;
+        }
+
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 20px;
+            transform-style: preserve-3d;
+        }
+
+        .monogram {
+            font-size: 3rem;
+            color: var(--gold-primary);
+            margin-bottom: 1rem;
+            animation: fadeInDown 1.5s ease;
+        }
+
+        .hero-title {
+            font-size: 5.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+            animation: fadeInUp 1.5s ease 0.3s backwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: rgba(245, 240, 232, 0.8);
+            animation: fadeInUp 1.5s ease 0.6s backwards;
+        }
+        
+        .hero-date {
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            margin-bottom: 3rem;
+            color: var(--gold-light);
+            animation: fadeInUp 1.5s ease 0.9s backwards;
+        }
+
+        .btn-ghost {
+            display: inline-block;
+            padding: 1rem 3rem;
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            background: transparent;
+            animation: fadeInUp 1.5s ease 1.2s backwards;
+        }
+
+        .btn-ghost:hover {
+            background: var(--gold-primary);
+            color: var(--bg-color);
+            box-shadow: 0 0 15px rgba(201, 168, 76, 0.3);
+        }
+
+        /* Estrutura de Seção */
+        section {
+            position: relative;
+            z-index: 1;
+            padding: 100px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--gold-primary);
+            margin-bottom: 4rem;
+        }
+
+        .section-title span {
+            display: block;
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            opacity: 0.6;
+        }
+
+        /* Contador */
+        .countdown-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+            padding: 4rem 0;
+            border-top: 1px solid rgba(201, 168, 76, 0.1);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+        }
+
+        .count-item {
+            background: rgba(26, 21, 16, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 16px;
+            padding: 2rem 1rem;
+            transition: var(--transition);
+        }
+
+        .count-item:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .count-item .number {
+            font-family: var(--font-serif);
+            font-size: 4.5rem;
+            color: var(--gold-light);
+            line-height: 1;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(201, 168, 76, 0.2);
+        }
+
+        .count-item .label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            opacity: 0.6;
+        }
+
+        /* História Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, var(--gold-primary), transparent);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 6rem;
+            width: 100%;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+        }
+
+        .timeline-content {
+            width: 85%;
+            padding: 0 2.5rem;
+            text-align: right;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            text-align: left;
+        }
+
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            right: -6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-color);
+            border: 2px solid var(--gold-primary);
+            box-shadow: 0 0 10px var(--gold-primary);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::after {
+            right: auto;
+            left: -6px;
+        }
+
+        .timeline-year {
+            color: var(--gold-light);
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 2px;
+            margin-top: 1.5rem;
+            filter: brightness(1);
+            transition: var(--transition);
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+
+        .timeline-item:hover .timeline-img {
+            filter: brightness(1.1);
+            border-color: var(--gold-primary);
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Lista de Presentes */
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .gift-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 3.5rem 2rem;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 0 20px rgba(212, 175, 55, 0.05);
+        }
+
+        .gift-card:hover {
+            border-color: var(--gold-primary);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px rgba(212, 175, 55, 0.2);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .gift-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(201, 168, 76, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .gift-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .gift-card:hover::before {
+            opacity: 1;
+        }
+
+        .gift-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            filter: sepia(1) hue-rotate(5deg) saturate(3);
+        }
+
+        .gift-title {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .gift-price {
+            color: var(--gold-primary);
+            margin-bottom: 2rem;
+            font-style: italic;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-shadow: 0 8px 22px rgba(0,0,0,0.55);
+        }
+
+        .gift-card .btn-ghost {
+            background: rgba(8, 8, 8, 0.72);
+            color: var(--gold-light);
+            border-color: rgba(212, 175, 55, 0.65);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+        }
+
+        .gift-card .btn-ghost:hover {
+            background: var(--gold-primary);
+            color: #080808;
+        }
+
+        /* Modal Presentes */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10,10,10,0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: #111;
+            border: 1px solid var(--gold-primary);
+            padding: 4rem;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 0 50px rgba(201, 168, 76, 0.1);
+            animation: fadeInUp 0.4s ease;
+        }
+
+        /* Mural de Mensagens */
+        .messages-container {
+            display: grid;
+            grid-template-columns: minmax(280px, 0.9fr) minmax(320px, 1.1fr);
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .location-card,
+        .presence-card {
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
+                rgba(10,10,10,0.66);
+            border: 1px solid rgba(212, 175, 55, 0.16);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.34);
+        }
+
+        .section-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 0.8rem;
+            margin-bottom: 1.2rem;
+            border-radius: 999px;
+            border: 1px solid rgba(212, 175, 55, 0.22);
+            color: var(--gold-light);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-size: 0.72rem;
+        }
+
+        .location-card h3,
+        .presence-card h3 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            margin-bottom: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .location-card p,
+        .presence-card p {
+            color: rgba(252, 250, 247, 0.72);
+        }
+
+        .location-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            align-items: center;
+        }
+
+        .location-actions .btn-ghost {
+            padding: 0.85rem 1.35rem;
+            font-size: 0.8rem;
+        }
+
+        .location-note {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: rgba(252, 250, 247, 0.5);
+        }
+
+        .map-frame {
+            width: 100%;
+            min-height: 320px;
+            border: 0;
+            border-radius: 20px;
+            margin-top: 1.5rem;
+            filter: saturate(0.9) contrast(1.02);
+            box-shadow: 0 14px 36px rgba(0,0,0,0.3);
+        }
+
+        .presence-form {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 0.85rem;
+            margin: 1.5rem 0 1.25rem;
+        }
+
+        .presence-form input {
+            width: 100%;
+        }
+
+        .presence-list {
+            display: grid;
+            gap: 0.75rem;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 0.35rem;
+        }
+
+        .presence-list::-webkit-scrollbar {
+            width: 2px;
+        }
+
+        .presence-list::-webkit-scrollbar-thumb {
+            background: var(--gold-primary);
+        }
+
+        .presence-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1rem;
+            border-radius: 14px;
+            border: 1px solid rgba(212, 175, 55, 0.14);
+            background: rgba(255,255,255,0.04);
+            color: var(--text-light);
+        }
+
+        .presence-item span {
+            color: rgba(252, 250, 247, 0.56);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .msg-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: 2rem;
+            border: 1px solid rgba(212, 175, 55, 0.18);
+            border-radius: 18px;
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.055), rgba(255,255,255,0.018)),
+                rgba(10,10,10,0.62);
+            box-shadow: 0 24px 60px rgba(0,0,0,0.34);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        input, textarea {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            color: var(--text-light);
+            padding: 0.9rem 1rem;
+            font-family: var(--font-sans);
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--gold-primary);
+            background: rgba(255,255,255,0.07);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .msg-board {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 1rem;
+        }
+
+        .msg-board::-webkit-scrollbar {
+            width: 2px;
+        }
+        .msg-board::-webkit-scrollbar-thumb {
+            background: var(--gold-primary);
+        }
+
+        .msg-card {
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025));
+            border: 1px solid rgba(212, 175, 55, 0.14);
+            border-radius: 18px;
+            padding: 1.25rem;
+            display: flex;
+            gap: 1rem;
+            transition: var(--transition);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.2);
+        }
+
+        .msg-card:hover {
+            border-color: rgba(212, 175, 55, 0.42);
+            background: rgba(201, 168, 76, 0.05);
+            transform: translateY(-3px);
+        }
+
+        .msg-card.pinned {
+            border-color: rgba(212, 175, 55, 0.42);
+            background:
+                radial-gradient(circle at top left, rgba(212, 175, 55, 0.16), transparent 36%),
+                linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.025));
+        }
+
+        .msg-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .msg-card.pinned .msg-avatar {
+            background: var(--gold-primary);
+            color: var(--bg-color);
+        }
+
+        .msg-content {
+            overflow: hidden;
+        }
+
+        .msg-content p {
+            opacity: 0.85;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: rgba(252, 250, 247, 0.9);
+        }
+
+        /* Playlist */
+        .playlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .track-card {
+            text-align: center;
+        }
+
+        .spotify-embed {
+            border-radius: 0;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: var(--transition);
+        }
+        
+        .spotify-embed:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(201, 168, 76, 0.2);
+        }
+
+        /* Video */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px; /* Mais contido no desktop */
+            margin: 0 auto;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            transition: var(--transition);
+            overflow: hidden;
+            display: flex;
+        }
+
+        .video-container:hover {
+            border-color: var(--gold-primary);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 6rem 20px 4rem;
+            border-top: 1px solid rgba(201, 168, 76, 0.1);
+            margin-top: 5rem;
+            background: linear-gradient(to top, rgba(201, 168, 76, 0.05), transparent);
+        }
+
+        .footer-logo {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            color: var(--gold-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Utilities */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Mobile */
+        @media (max-width: 900px) {
+            .navbar { display: none; } 
+            .hero-title { font-size: 3.5rem; }
+            #hero-3d { opacity: 0.66; }
+            .countdown-container { grid-template-columns: repeat(2, 1fr); gap: 3rem 1rem;}
+            .count-item .number { font-size: 3.5rem; }
+            .timeline::before { left: 0; }
+            .timeline-item { justify-content: flex-start; padding-left: 2rem; padding-right: 0; margin-bottom: 4rem;}
+            .timeline-item:nth-child(even) { padding-left: 2rem; }
+            .timeline-content { width: 100%; text-align: left; padding: 0 1rem;}
+            .timeline-content::after { left: -38px; right: auto; }
+            .timeline-item:nth-child(even) .timeline-content::after { left: -38px; }
+            .messages-container { grid-template-columns: 1fr; gap: 3rem;}
+            .location-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .presence-form { grid-template-columns: 1fr; }
+            .location-card,
+            .presence-card { padding: 1.5rem; }
+            .map-frame { min-height: 260px; }
+            .msg-board { padding-right: 0; }
+        }
+        
+        /* Disable custom cursor on touch devices */
+        @media (hover: none) and (pointer: coarse) {
+            * { cursor: auto; }
+            .cursor-dot, .cursor-outline { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="particles-canvas"></canvas>
+    
+    <!-- Custom Cursor -->
+    
+    
+
+    <nav class="navbar" id="navbar">
+        <ul class="nav-links">
+            <li><a href="#historia">História</a></li>
+            <li><a href="#presentes">Presentes</a></li>
+            <li><a href="#mural">Mural</a></li>
+            <li><a href="#playlist">Playlist</a></li>
+            <li><a href="#video">Vídeo</a></li>
+            <li><a href="#local">Local</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-bg" id="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <canvas id="hero-3d" aria-hidden="true"></canvas>
+        <div class="hero-content">
+            <div class="monogram serif">L & L</div>
+            <h1 class="hero-title serif">Luíza & Luan</h1>
+            <p class="hero-subtitle">O nosso para sempre começa aqui.</p>
+            <div class="hero-date">15 . 11 . 2026</div>
+            <a href="#historia" class="btn-ghost">Explorar nossa história</a>
+        </div>
+    </header>
+
+    <section id="countdown" class="fade-in">
+        <h2 class="section-title" style="margin-bottom: 2rem;"><span>15.11.2026</span>Contando os dias</h2>
+        <div class="countdown-container" style="border: none; padding-top: 1rem;">
+            <div class="count-item">
+                <div class="number" id="days">00</div>
+                <div class="label">Dias</div>
+            </div>
+            <div class="count-item">
+                <div class="number" id="hours">00</div>
+                <div class="label">Horas</div>
+            </div>
+            <div class="count-item">
+                <div class="number" id="minutes">00</div>
+                <div class="label">Minutos</div>
+            </div>
+            <div class="count-item">
+                <div class="number" id="seconds">00</div>
+                <div class="label">Segundos</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="historia">
+        <h2 class="section-title fade-in"><span>Nossa Trajetória</span>A História</h2>
+        <div class="timeline">
+            <div class="timeline-item fade-in">
+                <div class="timeline-content">
+                    <div class="timeline-year">2020 — Primeiro encontro</div>
+                    <p style="opacity: 0.8;">Entre olhares tímidos e sorrisos que aos poucos se tornaram mais sinceros, nossos caminhos se encontraram. O que começou de forma simples foi ganhando significado, até se transformar em uma história que escolhemos viver juntos.</p>
+                    <img src="assets/FOTO NOVA.jpg" alt="Primeiro Encontro" class="timeline-img">
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-content">
+                    <div class="timeline-year">2023 — Reencontro e para sempre</div>
+                    <p style="opacity: 0.8;">O tempo passou, os caminhos deram voltas, mas o destino já havia traçado sua rota. Quando nossos olhos se encontraram novamente, tivemos a certeza: não havia mais como soltar as mãos. O "sim" já ecoava em nossos corações muito antes de ser dito.</p>
+                    <img src="assets/mouoen9h-image.png" alt="Reencontro" class="timeline-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="presentes">
+        <h2 class="section-title fade-in"><span>Participe da nossa alegria</span>Lista de Presentes</h2>
+        <div class="gifts-grid">
+            <div class="gift-card fade-in">
+                <div class="gift-icon">&#127834;</div>
+                <h3 class="gift-title serif">Panela de arroz</h3>
+                <p class="gift-price">R$ 149,00</p>
+                <p style="margin-bottom: 2.5rem; opacity: 0.7; font-size: 0.95rem;">Para o arroz soltinho dos nossos almoços em casa.</p>
+                <button class="btn-ghost" onclick="openModal('panela-de-arroz', 'Panela de arroz')">Selecionar</button>
+            </div>
+            <div class="gift-card fade-in" style="transition-delay: 0.1s">
+                <div class="gift-icon">&#9749;</div>
+                <h3 class="gift-title serif">Máquina de café</h3>
+                <p class="gift-price">R$ 139,00</p>
+                <p style="margin-bottom: 2.5rem; opacity: 0.7; font-size: 0.95rem;">Para um cafe especial a qualquer hora do dia.</p>
+                <button class="btn-ghost" onclick="openModal('maquina-de-cafe', 'Máquina de café')">Selecionar</button>
+            </div>
+            <div class="gift-card fade-in" style="transition-delay: 0.2s">
+                <div class="gift-icon">&#129302;</div>
+                <h3 class="gift-title serif">Robô aspirador de pó</h3>
+                <p class="gift-price">R$ 134,00</p>
+                <p style="margin-bottom: 2.5rem; opacity: 0.7; font-size: 0.95rem;">Mais praticidade para manter nosso lar em ordem.</p>
+                <button class="btn-ghost" onclick="openModal('robo-aspirador-de-casa', 'Robô aspirador de pó')">Selecionar</button>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="presentes.html" class="btn-ghost">Ver todos os presentes</a>
+        </div>
+    </section>
+
+    <!-- Modal de Presente -->
+    <div class="modal" id="giftModal">
+        <div class="modal-content">
+            <h3 class="serif" style="color: var(--gold-primary); margin-bottom: 1rem; font-size: 2rem;">Presente Selecionado</h3>
+            <p id="modalGiftName" class="serif" style="margin-bottom: 1.5rem; font-size: 1.5rem; color: var(--text-light);"></p>
+            <p style="margin-bottom: 2.5rem; opacity: 0.6; font-size: 0.9rem;">Você será direcionado de forma segura para o Mercado Pago.</p>
+            <p id="checkoutStatus" style="color: var(--gold-primary); margin-bottom: 1rem; font-size: 0.9rem; min-height: 1.5rem;"></p>
+            <button class="btn-ghost" onclick="handleCheckout(this)" style="display: block; width: 100%; margin-bottom: 1rem; background: var(--gold-primary); color: var(--bg-color);">Continuar com Mercado Pago</button>
+            <button class="btn-ghost" onclick="closeModal()" style="display: block; width: 100%; border: none; color: rgba(255,255,255,0.4);">Voltar à lista</button>
+        </div>
+    </div>
+
+    <section id="mural">
+        <h2 class="section-title fade-in"><span>Deixe seu carinho</span>Mural de Mensagens</h2>
+        <div class="messages-container">
+            <div class="msg-form fade-in">
+                <p style="opacity: 0.78; font-size: 1.05rem;" class="serif">Sua palavra é uma bênção para nós. Deixe um recado especial que guardaremos para sempre.</p>
+                <div class="form-group">
+                    <label style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-primary);">Seu Nome</label>
+                    <input type="text" id="msgName" placeholder="Como devemos chamar você?">
+                </div>
+                <div class="form-group">
+                    <label style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-primary); margin-top: 1rem;">Mensagem</label>
+                    <textarea id="msgText" rows="4" placeholder="Escreva seus votos aqui..."></textarea>
+                </div>
+                <button onclick="postMessage()" style="align-self: stretch; background: var(--gold-primary); color: #000; border: none; padding: 1.1rem; border-radius: 12px; font-weight: 600; text-transform: uppercase; cursor: pointer; letter-spacing: 0.15em; font-size: 0.85rem; transition: background 0.3s ease;">Publicar Mensagem</button>
+            </div>
+            
+            <div class="msg-board fade-in" id="msgBoard">
+                <!-- Pinned Message -->
+                <div class="msg-card pinned">
+                    <div class="msg-avatar">L&L</div>
+                    <div class="msg-content">
+                        <h4 class="serif" style="font-size: 1.2rem; color: var(--gold-primary);">Luíza & Luan</h4>
+                        <p style="opacity: 0.9; font-size: 0.95rem; font-style: italic;">Mal podemos esperar para celebrar este dia tão especial com as pessoas que mais amamos. Obrigado por fazerem parte da nossa história! Cada mensagem aqui nos enche de alegria.</p>
+                    </div>
+                </div>
+                <!-- Dynamic messages will be injected here via JS -->
+            </div>
+        </div>
+    </section>
+
+    <section id="playlist">
+        <h2 class="section-title fade-in"><span>A trilha sonora</span>Nossas Canções</h2>
+        <div class="playlist-grid">
+            <div class="track-card fade-in">
+                <iframe class="spotify-embed" src="https://open.spotify.com/embed/track/6ccKu0LwJzOhLAxBwP2PTk?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <a href="https://open.spotify.com/track/6ccKu0LwJzOhLAxBwP2PTk" target="_blank" class="btn-ghost" style="padding: 0.5rem 1.5rem; font-size: 0.7rem; border-color: rgba(201,168,76,0.3);">Ouvir no Spotify</a>
+            </div>
+            <div class="track-card fade-in" style="transition-delay: 0.1s">
+                <iframe class="spotify-embed" src="https://open.spotify.com/embed/track/6gH4TId535zZLoBFSdnDFm?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <a href="https://open.spotify.com/track/6gH4TId535zZLoBFSdnDFm" target="_blank" class="btn-ghost" style="padding: 0.5rem 1.5rem; font-size: 0.7rem; border-color: rgba(201,168,76,0.3);">Ouvir no Spotify</a>
+            </div>
+            <div class="track-card fade-in" style="transition-delay: 0.2s">
+                <iframe class="spotify-embed" src="https://open.spotify.com/embed/track/1K35DXm0AjP31r1pNgS5wf?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <a href="https://open.spotify.com/track/1K35DXm0AjP31r1pNgS5wf" target="_blank" class="btn-ghost" style="padding: 0.5rem 1.5rem; font-size: 0.7rem; border-color: rgba(201,168,76,0.3);">Ouvir no Spotify</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="video">
+        <h2 class="section-title fade-in"><span>Nós em movimento</span>Luíza & Luan</h2>
+        <div class="video-container fade-in">
+            <video id="mainVideo" autoplay="autoplay" muted="muted" loop="loop" playsinline="playsinline" preload="auto" poster="assets/mouoen9h-image.png">
+                <source src="assets/VIDEO-2026-03-23-13-47-12.mp4" type="video/mp4">
+                <source src="assets/VIDEO-2026-03-23-13-47-12.mov" type="video/mp4">
+                Seu navegador não suporta a reprodução de vídeos.
+            </video>
+        </div>
+    </section>
+
+    <section id="local">
+        <h2 class="section-title fade-in"><span>Final do convite</span>Local e presença</h2>
+        <div class="location-grid">
+            <article class="location-card fade-in">
+                <div class="section-chip">Buffet Che Belle Giardino</div>
+                <h3>Endereço</h3>
+                <p>Av. Oliveira Freire, 811 - Parque Paulistano, São Paulo - SP, 08080-570</p>
+                <div class="location-actions">
+                    <a
+                        class="btn-ghost"
+                        href="https://www.google.com/maps/search/?api=1&query=Buffet+Che+Belle+Giardino+Av.+Oliveira+Freire+811+Parque+Paulistano+S%C3%A3o+Paulo+SP+08080-570"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Ver no Maps
+                    </a>
+                    <div class="location-note">Toque para abrir no Google Maps.</div>
+                </div>
+                <iframe
+                    class="map-frame"
+                    title="Mapa do Buffet Che Belle Giardino"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    src="https://www.google.com/maps?q=Buffet+Che+Belle+Giardino+Av.+Oliveira+Freire+811+Parque+Paulistano+S%C3%A3o+Paulo+SP+08080-570&output=embed"
+                ></iframe>
+            </article>
+
+            <article class="presence-card fade-in">
+                <div class="section-chip">Lista de presença</div>
+                <h3>Confirme seu nome</h3>
+                <p>Adicione seu nome para nos ajudar na organização do dia. A sua confirmação será enviada de forma privada para os noivos.</p>
+                <div class="presence-form">
+                    <input type="text" id="presenceName" placeholder="Digite seu nome">
+                    <button class="btn-ghost" onclick="addPresence()">Confirmar</button>
+                </div>
+                <div id="presenceSuccessMsg" style="display: none; color: var(--gold-primary); font-size: 0.9rem; margin-top: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;">Presença confirmada com sucesso!</div>
+                <p id="presenceSummary" style="display: none;"></p>
+            </article>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">L & L</div>
+        <p style="letter-spacing: 5px; font-size: 0.9rem; color: var(--gold-light); margin-bottom: 1.5rem;">15 . 11 . 2026 — SAVE THE DATE</p>
+        <p style="opacity: 0.4; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Criado com exclusividade para Luíza & Luan</p>
+    </footer>
+
+    <script>
+        // Custom Cursor Logic
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            // Dot follows instantly
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Outline follows with slight delay using WAAPI
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 300, fill: "forwards" });
+        });
+
+        // Hover effects for cursor
+        const interactables = document.querySelectorAll('a, button, input, textarea');
+        interactables.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorOutline.style.width = '60px';
+                cursorOutline.style.height = '60px';
+                cursorOutline.style.backgroundColor = 'rgba(201, 168, 76, 0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorOutline.style.width = '40px';
+                cursorOutline.style.height = '40px';
+                cursorOutline.style.backgroundColor = 'transparent';
+            });
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Parallax Effect for Hero Background
+        const heroBg = document.getElementById('hero-bg');
+        window.addEventListener('scroll', () => {
+            const scrollValue = window.scrollY;
+            if(scrollValue < window.innerHeight) {
+                heroBg.style.transform = `scale(1.05) translateY(${scrollValue * 0.4}px)`;
+            }
+        });
+
+        // Intersection Observer for Fade-ins
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Optional: only animate once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Countdown Timer
+        const targetDate = new Date("Nov 15, 2026 16:00:00").getTime();
+        
+        const countdownInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById("days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+            
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").innerHTML = "<div style='text-align:center;font-size:2.5rem;color:var(--gold-primary)' class='serif'>O grande dia chegou!</div>";
+            }
+        }, 1000);
+
+        // Modal Logic
+        const modal = document.getElementById('giftModal');
+        const modalText = document.getElementById('modalGiftName');
+        const checkoutStatus = document.getElementById('checkoutStatus');
+        let currentGiftId = null;
+
+        function openModal(giftId, giftName) {
+            currentGiftId = giftId;
+            modalText.innerText = giftName;
+            checkoutStatus.innerText = '';
+            modal.style.display = 'flex';
+        }
+
+        function handleCheckout(button) {
+            if (!currentGiftId) return;
+            window.location.href = `checkout.html?giftId=${currentGiftId}`;
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // Close modal on click outside
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Messages Logic
+        const msgBoard = document.getElementById('msgBoard');
+        
+        function loadMessages() {
+            const msgs = JSON.parse(localStorage.getItem('luizaLuanMsgs') || '[]');
+            msgs.forEach(msg => appendMessageToDOM(msg));
+        }
+
+        function postMessage() {
+            const nameInput = document.getElementById('msgName');
+            const textInput = document.getElementById('msgText');
+            
+            const name = nameInput.value.trim();
+            const text = textInput.value.trim();
+            
+            if (!name || !text) {
+                alert('Por favor, preencha seu nome e a mensagem para enviar.');
+                return;
+            }
+
+            const newMsg = {
+                id: Date.now(),
+                name: name,
+                text: text,
+                initial: name.charAt(0).toUpperCase()
+            };
+
+            const msgs = JSON.parse(localStorage.getItem('luizaLuanMsgs') || '[]');
+            msgs.push(newMsg);
+            localStorage.setItem('luizaLuanMsgs', JSON.stringify(msgs));
+
+            appendMessageToDOM(newMsg, true);
+            
+            nameInput.value = '';
+            textInput.value = '';
+        }
+
+        function appendMessageToDOM(msg, isNew = false) {
+            const div = document.createElement('div');
+            div.className = 'msg-card';
+            div.innerHTML = `
+                <div class="msg-avatar">${msg.initial}</div>
+                <div class="msg-content">
+                    <h4 class="serif" style="color: var(--gold-light); font-size: 1.1rem; margin-bottom: 0.3rem;">${msg.name}</h4>
+                    <p>${msg.text}</p>
+                </div>
+            `;
+            
+            // Insert right after the pinned message (index 1)
+            msgBoard.insertBefore(div, msgBoard.children[1]);
+            
+            if(isNew) {
+                div.animate([
+                    { opacity: 0, transform: 'translateY(-20px)' },
+                    { opacity: 1, transform: 'translateY(0)' }
+                ], { duration: 600, easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' });
+            }
+        }
+
+        // Initialize messages
+        loadMessages();
+
+        // Presence list logic
+        const presenceSummary = document.getElementById('presenceSummary');
+        const presenceApiUrl = window.location.protocol === 'file:'
+            ? 'http://localhost:3000/api/presences'
+            : `${window.location.origin}/api/presences`;
+
+        async function loadPresenceList() {
+            try {
+                const response = await fetch(presenceApiUrl);
+                if (!response.ok) {
+                    throw new Error('Falha ao carregar presenças');
+                }
+            } catch (error) {
+                // Silently fail, presence list is not displayed here
+            }
+        }
+
+        async function addPresence() {
+            const presenceInput = document.getElementById('presenceName');
+            const name = presenceInput.value.trim();
+
+            if (!name) {
+                alert('Digite um nome para confirmar a presença.');
+                return;
+            }
+
+            try {
+                const response = await fetch(presenceApiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Falha ao salvar presença');
+                }
+
+                document.getElementById('presenceSuccessMsg').style.display = 'block';
+                setTimeout(() => { document.getElementById('presenceSuccessMsg').style.display = 'none'; }, 5000);
+                presenceInput.value = '';
+                return;
+            } catch (error) {
+                const names = JSON.parse(localStorage.getItem('luizaLuanPresencas') || '[]');
+                names.unshift(name);
+                localStorage.setItem('luizaLuanPresencas', JSON.stringify(names));
+                
+                document.getElementById('presenceSuccessMsg').style.display = 'block';
+                setTimeout(() => { document.getElementById('presenceSuccessMsg').style.display = 'none'; }, 5000);
+                presenceInput.value = '';
+            }
+        }
+
+        // renderPresenceItem and updatePresenceSummary removed because list is hidden
+
+        loadPresenceList();
+
+        // Canvas Gold Particles & Petals
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        // Petal/Particle Class
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color, speedFactor) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+                this.speedFactor = speedFactor;
+                this.angle = Math.random() * 360;
+                this.spin = Math.random() < 0.5 ? 1 : -1;
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle * Math.PI / 180);
+                
+                // Draw a petal shape
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(this.size * 2, -this.size, this.size * 2, this.size * 2, 0, this.size * 2);
+                ctx.bezierCurveTo(-this.size * 2, this.size * 2, -this.size * 2, -this.size, 0, 0);
+                
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                
+                // Add a little highlight
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.stroke();
+                
+                ctx.restore();
+            }
+            update() {
+                // Scroll influence
+                let currentScroll = window.scrollY;
+                let scrollDiff = currentScroll - (this.lastScroll || currentScroll);
+                this.lastScroll = currentScroll;
+                
+                if (this.x > canvas.width || this.x < 0) {
+                    this.directionX = -this.directionX;
+                }
+                   if (Math.abs(scrollDiff) > 100) {
+                    scrollDiff = 0;
+                }
+                
+                this.x += this.directionX + (Math.sin(this.angle * 0.01) * 0.5);
+                // A queda natural da pétala
+                this.y += this.directionY * this.speedFactor;
+                // Move a pétala junto com o scroll da página
+                this.y -= scrollDiff * 1.0;
+                
+                this.angle += this.spin * 2;
+
+                // Reset if they float past the bottom or top
+                if (this.y > canvas.height) {
+                    this.y = -20;
+                    // Mantém na mesma lateral
+                    this.x = (this.x < canvas.width / 2) ? Math.random() * (canvas.width * 0.15) : canvas.width - (Math.random() * (canvas.width * 0.15));
+                } else if (this.y < -30) {
+                    this.y = canvas.height + 20;
+                    this.x = (this.x < canvas.width / 2) ? Math.random() * (canvas.width * 0.15) : canvas.width - (Math.random() * (canvas.width * 0.15));
+                }
+
+                this.draw();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 18000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1.5;
+                // Coloca apenas nas bordas (15% da esquerda ou 15% da direita)
+                let x = Math.random() > 0.5 
+                    ? Math.random() * (canvas.width * 0.15) 
+                    : canvas.width - (Math.random() * (canvas.width * 0.15));
+                let y = Math.random() * canvas.height;
+                let directionX = (Math.random() * 0.5) - 0.25;
+                let directionY = (Math.random() * 1) + 0.5;
+                let speedFactor = (Math.random() * 2) + 1;
+                // Cor rosada esbranquiçada como nas imagens de referência das pétalas
+                let color = Math.random() > 0.5 ? 'rgba(255, 235, 240, 0.24)' : 'rgba(245, 220, 225, 0.18)';
+
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color, speedFactor));
+            }
+        }
+
+        function animateParticles() {
+            requestAnimationFrame(animateParticles);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+        }
+
+        initParticles();
+        animateParticles();
+
+        // Mobile Video Autoplay Fix
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainVideo = document.querySelector('.video-container video');
+            if (mainVideo) {
+                mainVideo.muted = true;
+                const playPromise = mainVideo.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        // Play on first interaction if browser blocks it (e.g. low power mode)
+                        const playOnInteraction = () => {
+                            mainVideo.play();
+                            document.removeEventListener('touchstart', playOnInteraction);
+                            document.removeEventListener('click', playOnInteraction);
+                        };
+                        document.addEventListener('touchstart', playOnInteraction, { once: true });
+                        document.addEventListener('click', playOnInteraction, { once: true });
+                    });
+                }
+            }
+        });
+    </script>
+    <script type="module">
+        import * as THREE from 'https://unpkg.com/three@0.160.1/build/three.module.js';
+
+        const heroCanvas = document.getElementById('hero-3d');
+        const hero = document.querySelector('.hero');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (heroCanvas && hero && !reducedMotion) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+            camera.position.set(0, 0, 7.2);
+
+            const renderer = new THREE.WebGLRenderer({
+                canvas: heroCanvas,
+                alpha: true,
+                antialias: true,
+                powerPreference: 'high-performance'
+            });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+            renderer.setClearColor(0x000000, 0);
+
+            const group = new THREE.Group();
+            group.position.set(0, 0.08, -0.35);
+            scene.add(group);
+
+            const gold = new THREE.Color('#d4af37');
+            const softGold = new THREE.Color('#f1d592');
+
+            const ringMaterial = new THREE.MeshStandardMaterial({
+                color: softGold,
+                emissive: new THREE.Color('#7c5a17'),
+                emissiveIntensity: 0.44,
+                metalness: 0.92,
+                roughness: 0.22,
+                transparent: true,
+                opacity: 0.88
+            });
+
+            const ringGeometry = new THREE.TorusGeometry(0.86, 0.045, 28, 140);
+            const leftRing = new THREE.Mesh(ringGeometry, ringMaterial);
+            leftRing.position.set(-0.52, -0.1, 0);
+            leftRing.rotation.set(0.34, 0.58, -0.26);
+
+            const rightRing = new THREE.Mesh(ringGeometry, ringMaterial.clone());
+            rightRing.position.set(0.52, -0.1, 0.06);
+            rightRing.rotation.set(0.34, -0.58, 0.26);
+
+            const rings = new THREE.Group();
+            rings.add(leftRing, rightRing);
+            rings.scale.set(1.62, 1.62, 1.62);
+            group.add(rings);
+
+            const heartShape = new THREE.Shape();
+            heartShape.moveTo(0, 0.28);
+            heartShape.bezierCurveTo(0, 0.48, -0.34, 0.54, -0.48, 0.3);
+            heartShape.bezierCurveTo(-0.66, -0.02, -0.2, -0.3, 0, -0.52);
+            heartShape.bezierCurveTo(0.2, -0.3, 0.66, -0.02, 0.48, 0.3);
+            heartShape.bezierCurveTo(0.34, 0.54, 0, 0.48, 0, 0.28);
+
+            const heartGeometry = new THREE.ExtrudeGeometry(heartShape, {
+                depth: 0.045,
+                bevelEnabled: true,
+                bevelSize: 0.018,
+                bevelThickness: 0.018,
+                bevelSegments: 3
+            });
+            heartGeometry.center();
+
+            const heartMaterial = new THREE.MeshStandardMaterial({
+                color: gold,
+                emissive: new THREE.Color('#5b1a2d'),
+                emissiveIntensity: 0.22,
+                metalness: 0.66,
+                roughness: 0.36,
+                transparent: true,
+                opacity: 0.72
+            });
+            const heart = new THREE.Mesh(heartGeometry, heartMaterial);
+            heart.position.set(0, -0.18, -0.18);
+            heart.rotation.set(0.06, 0, 0);
+            heart.scale.set(0.42, 0.42, 0.42);
+            group.add(heart);
+
+            const glintMaterial = new THREE.LineBasicMaterial({
+                color: softGold,
+                transparent: true,
+                opacity: 0.42
+            });
+            const glintGeometry = new THREE.BufferGeometry().setFromPoints([
+                new THREE.Vector3(-1.8, -0.2, 0.02),
+                new THREE.Vector3(1.8, 0.1, 0.02)
+            ]);
+            const glint = new THREE.Line(glintGeometry, glintMaterial);
+            group.add(glint);
+
+            /* -- REMOVIDO PARTICULAS --
+            const particleCount = 150;
+            const positions = new Float32Array(particleCount * 3);
+            for (let i = 0; i < particleCount; i++) {
+                const radius = 1.2 + Math.random() * 2.2;
+                const angle = Math.random() * Math.PI * 2;
+                const height = (Math.random() - 0.5) * 1.8;
+                positions[i * 3] = Math.cos(angle) * radius;
+                positions[i * 3 + 1] = height;
+                positions[i * 3 + 2] = Math.sin(angle) * radius * 0.62;
+            }
+
+            const particleGeometry = new THREE.BufferGeometry();
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            const particleMaterial = new THREE.PointsMaterial({
+                color: softGold,
+                size: 0.035,
+                transparent: true,
+                opacity: 0.72,
+                depthWrite: false
+            });
+            const particles = new THREE.Points(particleGeometry, particleMaterial);
+            group.add(particles);
+            */
+
+            scene.add(new THREE.AmbientLight(0xf1d592, 1.2));
+            const light = new THREE.PointLight(0xf1d592, 2.1, 14);
+            light.position.set(2.8, 2.2, 4.5);
+            scene.add(light);
+
+            function resizeHeroScene() {
+                const rect = hero.getBoundingClientRect();
+                const width = Math.max(1, rect.width);
+                const height = Math.max(1, rect.height);
+                renderer.setSize(width, height, false);
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                const compact = width < 760;
+                group.scale.setScalar(compact ? 0.62 : 0.86);
+                group.position.y = compact ? 0.26 : 0.08;
+            }
+
+            window.addEventListener('resize', resizeHeroScene);
+            resizeHeroScene();
+
+            let pointerX = 0;
+            let pointerY = 0;
+            window.addEventListener('mousemove', (event) => {
+                pointerX = (event.clientX / window.innerWidth - 0.5) * 0.18;
+                pointerY = (event.clientY / window.innerHeight - 0.5) * 0.12;
+            }, { passive: true });
+
+            const clock = new THREE.Clock();
+
+            function renderHeroScene() {
+                const elapsed = clock.getElapsedTime();
+                const scrollInfluence = Math.min(window.scrollY / Math.max(1, window.innerHeight), 1);
+
+                group.rotation.y = Math.sin(elapsed * 0.22) * 0.12 + pointerX;
+                group.rotation.x = Math.cos(elapsed * 0.18) * 0.08 - pointerY;
+                group.position.z = -0.35 - scrollInfluence * 0.8;
+
+                rings.rotation.y = Math.sin(elapsed * 0.42) * 0.1;
+                rings.rotation.z = Math.sin(elapsed * 0.32) * 0.035;
+                leftRing.rotation.z = -0.26 + Math.sin(elapsed * 0.8) * 0.015;
+                rightRing.rotation.z = 0.26 - Math.sin(elapsed * 0.8) * 0.015;
+                heart.rotation.z = Math.sin(elapsed * 0.9) * 0.045;
+                heart.position.y = -0.18 + Math.sin(elapsed * 1.15) * 0.035;
+                glint.rotation.z = Math.sin(elapsed * 0.55) * 0.18;
+                glint.material.opacity = 0.22 + (Math.sin(elapsed * 1.4) + 1) * 0.14;
+                // particles.rotation.y -= 0.0012;
+
+                renderer.render(scene, camera);
+                requestAnimationFrame(renderHeroScene);
+            }
+
+            renderHeroScene();
+        } else if (heroCanvas) {
+            heroCanvas.style.display = 'none';
+        }
+    </script>
+    <style>
+        .site-pet {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            height: 250px;
+            width: auto;
+            object-position: bottom right;
+            image-rendering: pixelated;
+            z-index: 9999;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: bottom right;
+        }
+        .site-pet:hover {
+            transform: scale(1.15);
+        }
+        .pet-scrolling {
+            /* Efeito de pulo leve enquanto rola a tela */
+            transform: translateY(-15px);
+        }
+        @media (max-width: 768px) {
+            .site-pet {
+                height: 250px;
+                width: auto;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+    <img id="site-pet-img" src="assets/pixels/pngg1.png" class="site-pet" alt="Mascote do Casal">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const petImg = document.getElementById('site-pet-img');
+            const frames = [
+                'assets/pixels/pngg1.png',
+                'assets/pixels/pngg2.png',
+                'assets/pixels/pngg3.png',
+                'assets/pixels/pngg4.png',
+                'assets/pixels/pngg5.png',
+                'assets/pixels/pngg6.png'
+            ];
+            let currentFrame = 0;
+            let scrollTimeout;
+            let isScrolling = false;
+            let animInterval = null;
+
+            // Função para controlar a velocidade dos frames
+            function startAnimation(speed) {
+                if (animInterval) clearInterval(animInterval);
+                animInterval = setInterval(() => {
+                    currentFrame = (currentFrame + 1) % frames.length;
+                    petImg.src = frames[currentFrame];
+                }, speed);
+            }
+
+            // Inicia com animação bem calma (900ms)
+            startAnimation(900);
+
+            // Detecta quando o usuário rola a tela
+            window.addEventListener('scroll', () => {
+                if (!isScrolling) {
+                    isScrolling = true;
+                    petImg.classList.add('pet-scrolling');
+                }
+
+                // Limpa o temporizador para saber quando o scroll parou
+                window.clearTimeout(scrollTimeout);
+
+                // Quando parar de rolar por 150ms, volta ao normal
+                scrollTimeout = setTimeout(() => {
+                    isScrolling = false;
+                    petImg.classList.remove('pet-scrolling');
+                }, 150);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
