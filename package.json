@@ -1,0 +1,25 @@
+{
+  "name": "lu-e-lu",
+  "version": "1.0.0",
+  "description": "Copie `.env.example` para `.env` e coloque o token da sua conta Mercado Pago:",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedruu13/site-casamento.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/pedruu13/site-casamento/issues"
+  },
+  "homepage": "https://github.com/pedruu13/site-casamento#readme",
+  "dependencies": {
+    "ioredis": "^6.0.0"
+  }
+}

@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <script>
+        (async function checkAccess() {
+            try {
+                const res = await fetch('/api/check-access');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.blocked) {
+                        document.documentElement.innerHTML = '<head><title>Página Indisponível</title><meta charset="utf-8"></head><body style="margin:0;display:flex;align-items:center;justify-content:center;height:100vh;background:#000;color:#888;font-family:sans-serif;text-align:center;"><div><h1 style="font-size:2.5rem;color:#d4af37;margin-bottom:12px;">403</h1><p style="letter-spacing:1px;font-size:0.95rem;color:#aaa;">Esta página está temporariamente indisponível para o seu dispositivo.</p></div></body>';
+                    }
+                }
+            } catch(e) {}
+        })();
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luíza & Luan - O nosso para sempre</title>
@@ -1083,8 +1097,9 @@
                 <div class="section-chip">Lista de presença</div>
                 <h3>Confirme seu nome</h3>
                 <p>Adicione seu nome para nos ajudar na organização do dia. A sua confirmação será enviada de forma privada para os noivos.</p>
-                <div class="presence-form">
-                    <input type="text" id="presenceName" placeholder="Digite seu nome">
+                <div class="presence-form" style="grid-template-columns: 1fr; gap: 0.85rem;">
+                    <input type="text" id="presenceName" placeholder="Digite seu nome completo">
+                    <input type="tel" id="presencePhone" placeholder="Seu WhatsApp (apenas números)">
                     <button class="btn-ghost" onclick="addPresence()">Confirmar</button>
                 </div>
                 <div id="presenceSuccessMsg" style="display: none; color: var(--gold-primary); font-size: 0.9rem; margin-top: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;">Presença confirmada com sucesso!</div>
@@ -1095,9 +1110,11 @@
 
     <footer>
         <div class="footer-logo">L & L</div>
-        <p style="letter-spacing: 5px; font-size: 0.9rem; color: var(--gold-light); margin-bottom: 1.5rem;">15 . 11 . 2026 — SAVE THE DATE</p>
+        <p style="letter-spacing: 5px; font-size: 0.9rem; color: var(--gold-light); margin-bottom: 1.5rem;">15 . 11 . 2026 - SAVE THE DATE</p>
         <p style="opacity: 0.4; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Criado com exclusividade para Luíza & Luan</p>
+        <p style="opacity: 0.5; font-size: 0.75rem; margin-top: 2rem; letter-spacing: 1px;">Desenvolvido por <a href="https://pedroporti.netlify.app/" target="_blank" style="color: var(--gold-light); text-decoration: none; border-bottom: 1px dashed var(--gold-light); transition: opacity 0.3s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Pedro</a></p>
     </footer>
+
 
     <script>
         // Custom Cursor Logic
@@ -1228,12 +1245,31 @@
         // Messages Logic
         const msgBoard = document.getElementById('msgBoard');
         
-        function loadMessages() {
+        const messagesApiUrl = window.location.protocol === 'file:'
+            ? 'http://localhost:3000/api/messages'
+            : `${window.location.origin}/api/messages`;
+
+        async function loadMessages() {
+            try {
+                const response = await fetch(messagesApiUrl);
+                if (response.ok) {
+                    const data = await response.json();
+                    let msgs = data.messages || [];
+                    msgs.slice().reverse().forEach(msg => appendMessageToDOM(msg));
+                } else {
+                    fallbackLoadMessages();
+                }
+            } catch(e) {
+                fallbackLoadMessages();
+            }
+        }
+
+        function fallbackLoadMessages() {
             const msgs = JSON.parse(localStorage.getItem('luizaLuanMsgs') || '[]');
             msgs.forEach(msg => appendMessageToDOM(msg));
         }
 
-        function postMessage() {
+        async function postMessage() {
             const nameInput = document.getElementById('msgName');
             const textInput = document.getElementById('msgText');
             
@@ -1245,21 +1281,36 @@
                 return;
             }
 
-            const newMsg = {
-                id: Date.now(),
-                name: name,
-                text: text,
-                initial: name.charAt(0).toUpperCase()
-            };
+            try {
+                const response = await fetch(messagesApiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, text })
+                });
 
-            const msgs = JSON.parse(localStorage.getItem('luizaLuanMsgs') || '[]');
-            msgs.push(newMsg);
-            localStorage.setItem('luizaLuanMsgs', JSON.stringify(msgs));
+                if (!response.ok) throw new Error('Falha');
+                
+                const data = await response.json();
+                appendMessageToDOM(data.message, true);
+                
+                nameInput.value = '';
+                textInput.value = '';
+            } catch (e) {
+                const newMsg = {
+                    id: Date.now(),
+                    name: name,
+                    text: text,
+                    initial: name.charAt(0).toUpperCase()
+                };
+                const msgs = JSON.parse(localStorage.getItem('luizaLuanMsgs') || '[]');
+                msgs.push(newMsg);
+                localStorage.setItem('luizaLuanMsgs', JSON.stringify(msgs));
 
-            appendMessageToDOM(newMsg, true);
-            
-            nameInput.value = '';
-            textInput.value = '';
+                appendMessageToDOM(newMsg, true);
+                
+                nameInput.value = '';
+                textInput.value = '';
+            }
         }
 
         function appendMessageToDOM(msg, isNew = false) {
@@ -1272,9 +1323,8 @@
                     <p>${msg.text}</p>
                 </div>
             `;
-            
-            // Insert right after the pinned message (index 1)
-            msgBoard.insertBefore(div, msgBoard.children[1]);
+            // Insert at the end of the list (so oldest is at top, newest at bottom)
+            msgBoard.appendChild(div);
             
             if(isNew) {
                 div.animate([
@@ -1306,10 +1356,16 @@
 
         async function addPresence() {
             const presenceInput = document.getElementById('presenceName');
+            const phoneInput = document.getElementById('presencePhone');
             const name = presenceInput.value.trim();
+            const phone = phoneInput ? phoneInput.value.trim() : '';
 
             if (!name) {
                 alert('Digite um nome para confirmar a presença.');
+                return;
+            }
+            if (!phone) {
+                alert('O número de WhatsApp é obrigatório para confirmar sua identidade.');
                 return;
             }
 
@@ -1319,7 +1375,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ name })
+                    body: JSON.stringify({ name, phone })
                 });
 
                 if (!response.ok) {
