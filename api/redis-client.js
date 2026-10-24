@@ -10,10 +10,8 @@ function getRedis() {
   return redis;
 }
 
-// Lista de IPs bloqueados de acessar/confirmar/interagir
-const BLOCKED_IPS = [
-  '187.116.107.28'
-];
+// Lista de IPs bloqueados (vazia no momento)
+const BLOCKED_IPS = [];
 
 function isIpBlocked(ip) {
   if (!ip) return false;
